@@ -1,0 +1,91 @@
+{% extends 'base/web-base.html' %}
+{% block container %}
+{% load static %}
+
+    <header class="h-[80px] flex items-center px-[15px]">
+        <a href="{% url 'web:index'%} " class=""><img src="{% static '/web/images/arrow.png' %}" alt="arrow" class="h-[40px]" ></a>
+        <h1 class="text-center relative left-[45%]  text-[22px] font-[600]">Account</h1>
+    </header>
+
+    <section class="wrapper py-16 flex items-center ">
+      <div class="w-[30%]">
+        <div class="  flex items-center border px-[90px] py-[55px] rounded-2xl ">
+            <div class="mr-[20px]">
+                <img src="{% static '/web/images/man.png' %}" alt="man" class="w-[100px]">
+            </div>
+            <div class="mr-[20px] ">
+                <h1 class=" text-[20px] font-semibold mb-3  ">Muhammed Migdad</h1>
+                <span class=" text-[20px] font-semibold mb-2">+91 7902467062</span>
+                <p class=" text-[20px] font-semibold mt-2 ">migdad@tegrand.in</p>
+            </div>
+        </div>
+        <ul class=" flex items-center border px-5 py-2 rounded-2xl  bg-[#23b56e] mt-[30px]">
+            <a href="{% url 'web:address'%}">
+                <img class="mr-[20px] w-[30px]" src="{% static '/web/images/address.png' %}" alt="">
+            </a>
+                <li class="text-[20px] font-semibold text-[#fff]">Manage Address</li>
+        </ul>
+        <ul class=" flex items-center border px-5 py-2 rounded-2xl  bg-[#23b56e] mt-[30px]">
+            <a href="{% url 'web:order'%}">
+                <img class="mr-[20px] w-[30px]" src="{% static '/web/images/cart.png' %}" alt="">
+            </a>
+                <li class="text-[20px] font-semibold text-[#fff]">Orders</li>
+        </ul>
+        <ul class=" flex items-center border px-5 py-2 rounded-2xl  bg-[#23b56e] mt-[30px]">
+            <a href="{% url 'web:logout'%}">
+                <img class="mr-[20px] w-[30px]" src="{% static '/web/images/logout.png' %}" alt="">
+            </a>
+                <li class="text-[20px] font-semibold text-[#fff]">Logout</li>
+        </ul>
+      </div>
+      <div class="ml-[100px] w-[68%]">
+        <h1 class="text-[23px] text-center font-semibold">Recent Orders</h1>
+        <section class="max-w-4xl mx-auto mt-10  ">
+            {% if order %}
+                <div class="grid gap-8">
+                    {% for order in order %}
+                        <div class="block border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out px-[50px] py-[20px] bg-white">
+                            <div class="flex justify-between items-center">
+                                <h2 class="text-2xl font-semibold text-gray-800">Order #{{ order.id }}</h2>
+                                <span class="px-3 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800">
+                                    Placed on: {{ order.created_at|date:"F j, Y" }}
+                                </span>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <h3 class="text-lg font-semibold text-gray-800">Items:</h3>
+                                <ul class="mt-2 space-y-1">
+                                    {% for item in order.cartbill.all %}
+                                        <li class="flex justify-between items-center">
+                                            <span class="text-gray-700">{{ item.product.name }} (x{{ item.quantity }})</span>
+                                            <span class="text-green-600 font-semibold">₹{{ item.price }}</span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+    
+                            <div class="mt-4 flex justify-between items-center">
+                                <p class="text-xl font-bold text-gray-900 mr-[20px]">Total: ₹{{ order.totel_amount }}</p>
+                                <a href="{% url 'web:single_order' id=order.id %}">
+                                    <span class="px-4 py-2 text-sm font-medium rounded-lg bg-green-500 text-white">TRACK ORDER</span>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center mt-20">
+                    <p class="text-2xl font-semibold text-gray-700">You have no orders yet.</p>
+                    <a href="{% url 'web:index' %}" class="mt-6 inline-block bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out">
+                        Shop Now
+                    </a>
+                </div>
+            {% endif %}
+        </section>
+    
+      </div>
+     
+    </section>
+
+{%endblock%}
+    

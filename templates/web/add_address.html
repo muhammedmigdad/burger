@@ -1,0 +1,44 @@
+{% extends 'base/web-base.html' %}
+{% block container %}
+{% load static %}
+
+<header class="h-[80px] flex items-center px-[15px]">
+    <a class="h-[100%]" href="{% url 'web:address'%}">
+        <img src="{% static 'web/images/arrow.png' %}" alt="arrow" class="h-[40px] mt-[20px]">
+    </a>
+    <h1 class="text-center relative left-[43%] text-[22px] font-[600]">Address</h1>
+</header>
+
+<section class="px-[15px]">
+    <div class="max-w-[620px] h-[300px] bg-[#39393754] m-auto mt-[30px] rounded-[5px] flex justify-center"><img src="{% static 'web/images/address.png' %}" alt="" class="w-[250px] h-[260px] mt-[10px]"></div>
+    <form action="" method="POST" class="max-w-[620px] m-auto mt-[10px]">
+        {% csrf_token %}
+        <label for="address" class="font-[500] mb-[5px] inline-block">Address</label><br>
+        <input type="text" placeholder="Address" name="address" value="{{ address.address }}" class="border-[2px] mb-[10px] w-[100%] h-[40px] rounded-[5px]"><br>
+
+        <label for="appartment" class="font-[500] mb-[5px] inline-block">Apartment</label><br>
+        <input type="text" placeholder="Appartment" name="appartment" value="{{ address.appartment }}" class="border-[2px] mb-[10px] w-[100%] h-[40px] rounded-[5px]"><br>
+
+        <label for="landmark" class="font-[500] mb-[5px] inline-block">Landmark</label><br>
+        <input type="text" placeholder="Landmark" name="landmark" value="{{ address.landmark }}" class="border-[2px] mb-[10px] w-[100%] h-[40px] rounded-[5px]"><br>
+
+        <label for="phone_number" class="font-[500] mb-[5px] inline-block">Phone_number</label><br>
+        <input type="text" placeholder="Phonenumber" name="phone_number" value="{{ address.phone_number }}" class="border-[2px] mb-[10px] w-[100%] h-[40px] rounded-[5px]" required oninput="this.value = this.value.replace(/[^0-9]/g, '');"><br>
+
+        <div class="form-group">
+            <label for="address_type">Address Type</label>
+            <select name="address_type" id="address_type" class="border-[2px] mb-[10px] w-[100%] h-[40px] rounded-[5px]">
+                <option value="home" {% if address.address_type == "home" %}selected{% endif %}>Home</option>
+                <option value="work" {% if address.address_type == "work" %}selected{% endif %}>Work</option>
+            </select>
+        </div>
+
+        <div class="max-w-[620px] py-[10px] hover:text-black bg-red-600 text-white text-[18px] font-[600] text-center m-auto mt-[40px] rounded-[5px] items-center mb-[30px]">
+            <button type="submit">
+                SAVE ADDRESS
+            </button>
+        </div>
+    </form>
+</section>
+
+{% endblock %}

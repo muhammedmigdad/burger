@@ -1,0 +1,149 @@
+{% extends 'base/web-base.html' %}
+{% block container %}
+{% load static %}
+
+
+    {% if store %}
+    <header class="h-[80px] flex items-center px-[15px]">
+        <a class="h-[100%]" href="{% url 'web:index'%}"><img src="{% static '/web/images/arrow.png' %}" alt="arrow" class="h-[40px] mt-[20px]"></a>
+        <h1 class="text-center relative left-[45%]  text-[22px] font-[600]">Cart</h1>
+    </header>
+
+    <section class="px-[15px] text-[#000] ">
+        <div class="shadow-md offset-y-2 opacity-90 flex max-w-[620px] h-[150px] sm:h-[200px] p-[20px] border-[1px] border-[#d4d2d2] rounded-[5px] m-auto mt-[30px] mb-[50px]">
+            <img src="{{store.image.url}}" alt="rest" class="h-[100%] rounded-[5px] mr-[15px]">
+            <div class="mt-[-8px]">
+                <h1 class="text-[16px] sm:text-[22px] font-[600] mb-[5px]">{{store.name}}</h1>
+                <h3 class="mb-[5px]">{{store.taglin}}</h3>
+                <ul class="flex mb-[5px]">
+                    <li class="flex mr-[15px] items-center">
+                        <img src="{% static '/web/images/star.png' %}" alt="star" class="h-[20px] mr-[10px]">
+                        <p class="text-[15px] sm:text-[18px] font-[600]">{{store.rating}}</p>
+                    </li>
+                    <li class="flex mr-[15px] items-center">
+                        <img src="{% static '/web/images/clock.png' %}" alt="clock" class="h-[20px] mr-[10px]">
+                        <p class="text-[15px] sm:text-[18px] font-[600]">{{store.time}}mins</p>     
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="px-[15px]">
+        <ul class="px-[20px] py-[10px] max-w-[620px] m-auto shadow-md offset-y-2 opacity-90 border-[1px] border-[#d4d2d2] rounded-[5px]">
+            <li class="text-[22px] w-[100%] border-b-[1px] border-[#d4d2d2]">
+                ITEMS IN CART
+            </li>
+            {% for item in cart_items %}
+            <li class=" w-[100%] border-b-[1px] border-[#d4d2d2] items-center py-[10px]">
+                    <div class="flex justify-between">
+                        <div>
+                            <h3>
+                                {{item.product.name}}
+                            </h3>
+                            <span class="font-[500]">{{item.product.price}}</span>
+                        </div>
+                        <div class="w-[60px] flex justify-between">
+                            <a href="{% url 'web:cart_minus' id=item.product.id %}" class="bg-[#2AC489] w-[33%] rounded-l-[5px] text-white text-center h-[50%]">-</a>
+                            <span>{{item.quantity}}</span>
+                            <a href="{% url 'web:cart_plus' id=item.product.id %}" class="bg-[#2AC489] w-[33%] rounded-r-[5px] text-white text-center h-[50%]">+</a>
+                        </div> 
+                    </div>
+                </li>
+                {% endfor %}
+        </ul>
+
+
+        <div class="px-[20px] py-[10px] max-w-[620px] m-auto shadow-md offset-y-2 opacity-90 border-[1px] border-[#d4d2d2] rounded-[5px] mt-[20px]">
+            <div class=" w-[100%] border-b-[1px] border-[#d4d2d2] items-center py-[10px]">
+                <form class="flex justify-between" method="post" action="">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Coupon Code" name="code" class=" outline-none">
+                    {% if error_message %}
+                        <div class="alert alert-danger text-red-500 font-bold bg-red-50 p-2 rounded-md">
+                            {{ error_message }}
+                        </div>
+                    {% endif %}
+
+                    {% if success_message %}
+                        <div class="alert alert-success text-green-500 font-bold bg-green-50 p-2 rounded-md">
+                            {{ success_message }}
+                        </div>
+                    {% endif %}
+
+                    <button type="submit" class="px-[18px] py-[6px] bg-[#2AC489] rounded-[5px] text-white font-[500]">
+                    APPLY
+                    </button>
+                </form>
+            </div>
+            <div class="flex items-center mt-[10px]">
+                <img src="{% static '/web/images/discount.png' %}" alt="dis" class="h-[20px] mr-[5px]">
+                <a href="{% url 'web:offer'%}" class="text-red-600 font-[400]">View All Offers</a>
+            </div>
+        </div>
+        <div class="px-[20px] py-[10px] max-w-[620px] m-auto shadow-md offset-y-2 opacity-90 border-[1px] border-[#d4d2d2] rounded-[5px] mt-[20px]">
+            <h3 class="text-[20px] font-[500]">BILL DETAILS</h3>
+            <ul>
+                <li class="flex justify-between w-[100%] border-b-[1px] border-[#d4d2d2] items-center py-[10px]">
+                    <p>Item Total</p>
+                    <span>{{cartbill.item_total}}</span>
+                </li>
+                <li class="flex justify-between w-[100%] border-b-[1px] border-[#d4d2d2] items-center py-[10px]">
+                    <p>Offer Applied</p>
+                    <span>{{cartbill.offer_amount}}</span>
+                </li>
+                <li class="flex justify-between w-[100%] border-b-[1px] border-[#d4d2d2] items-center py-[10px]">
+                    <p>delivery charges(4km)</p>
+                    <span>{{cartbill.delivery_charge}}</span>
+                </li>
+                <li class="flex justify-between w-[100%] items-center py-[10px]">
+                    <p class="text-[18px] font-[700]">To Pay</p>
+                    <span class="text-[18px] font-[700]">{{cartbill.totel_amount}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="px-[20px] py-[10px] max-w-[620px] m-auto shadow-md offset-y-2 opacity-90 border-[1px] rounded-[5px] mt-[20px]">
+            <div class="flex justify-between w-[100%] border-b-[1px] border-[#d4d2d2] items-center py-[10px]">
+                <h3 class="text-[20px] font-[500]">
+                    DELIVER TO
+                </h3>
+            </div>
+            {% if address %}
+            <div class="flex justify-between w-[100%] items-center py-[10px]">
+                <p class="text-[13px] sm:text-[18px]">
+                    {{address.address}}, {{address.appartment}}, {{address.landmark}}, {{address.phone_number}}
+                </p>
+                <a href="{% url 'web:address'%}">
+                    <button class="px-[18px] py-[6px] bg-[#2AC489] rounded-[5px] text-white font-[500]">
+                        CHANGE
+                    </button>
+                </a>
+            </div>
+                {% else %}
+                <a href="{% url 'web:address'%}">
+                    <button class="px-[18px] py-[6px] bg-[#2AC489] rounded-[5px] text-white font-[500]">
+                        ADD ADDRESS
+                    </button>
+                </a>
+            {% endif %}
+        </div>
+        <a href="{% url 'web:checkout'%}">
+            <div class="max-w-[620px] py-[10px] bg-red-600 text-white text-[18px] font-[600] text-center m-auto mt-[10px] rounded-[5px] items-center">
+                CONTINUE
+            </div>
+        </a>
+    </section>
+
+    {% else %}
+
+    <div class="bg-gray-100  h-screen">
+        <div class="text-center">
+            <svg class="w-[400px] h-[400px] mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L6 6H4m3 7l1.4 5.4a2 2 0 002 1.6h7a2 2 0 002-1.6L17 13m-10 0h10m-6 5a1 1 0 101 1m-4 0a1 1 0 101 1"></path></svg>
+            <h1 class="mt-4 text-2xl font-bold text-gray-700">Your Cart is Empty</h1>
+            <p class="mt-2 text-gray-500">Looks like you haven't added anything to your cart yet.</p>
+            <a href="/" class="mt-6 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Continue Shopping</a>
+        </div>
+    </div>
+
+{% endif %}
+{%endblock%}

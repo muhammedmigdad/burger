@@ -1,0 +1,51 @@
+{% extends 'base/web-base.html' %}
+{% block container %}
+{% load static %}
+    <header class="h-[80px] flex items-center px-4  shadow-lg">
+        <a href="{% url 'web:index' %}" class="mr-4">
+            <img src="{% static '/web/images/arrow.png' %}" alt="Back" class="h-[24px]">
+        </a>
+        <h1 class="text-center flex-grow text-[24px] font-semibold">My Orders</h1>
+    </header>
+    <section class="max-w-4xl mx-auto mt-10 px-4">
+        {% if orders %}
+            <div class="grid gap-8">
+                {% for order in orders %}
+                    <a href="{% url 'web:single_order' id=order.id %}" class="block border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out p-6 bg-white">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-2xl font-semibold text-gray-800">Order #{{ order.id }}</h2>
+                            <span class="px-3 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800">
+                                Placed on: {{ order.created_at|date:"F j, Y" }}
+                            </span>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Items:</h3>
+                            <ul class="mt-2 space-y-1">
+                                {% for item in order.cartbill.all %}
+                                    <li class="flex justify-between items-center">
+                                        <span class="text-gray-700">{{ item.product.name }} (x{{ item.quantity }})</span>
+                                        <span class="text-green-600 font-semibold">₹{{ item.price }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="mt-4 flex justify-between items-center">
+                            <p class="text-xl font-bold text-gray-900">Total: ₹{{ order.totel_amount }}</p>
+                            <span class="px-4 py-2 text-sm font-medium rounded-lg bg-blue-500 text-white">View Details</span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center mt-20">
+                <p class="text-2xl font-semibold text-gray-700">You have no orders yet.</p>
+                <a href="{% url 'web:index' %}" class="mt-6 inline-block bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out">
+                    Shop Now
+                </a>
+            </div>
+        {% endif %}
+    </section>
+
+{% endblock %}

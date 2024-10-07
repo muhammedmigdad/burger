@@ -1,0 +1,43 @@
+{% extends 'base/web-base.html' %}
+{% block container %}
+{% load static %}
+
+
+
+<header class="h-[80px] flex items-center px-[15px]">
+    <a class="h-[100%]" href="{% url 'web:cart'%}"><img src="{% static '/web/images/arrow.png' %}" alt="arrow" class="h-[40%] mt-[20px]"></a>
+    <h1 class="text-center relative left-[43%] text-[22px] font-[600]">Address</h1>
+</header>
+
+<section class="px-[15px]">
+    <div class="max-w-[620px] py-[10px] bg-red-600 text-white text-[18px] font-[600] text-center m-auto mt-[40px] hover:text-black rounded-[5px] items-center">
+       <a href="{% url 'web:add_address'%}">ADD NEW ADDRESS</a>
+    </div>
+    {% for address in current_address %}
+    <div class="flex justify-between bg-[#c6c6bb54] h-[150px] max-w-[620px] m-auto px-[20px] mt-[20px] items-center rounded-[5px]">
+        <div class="bg-white rounded-[50%] w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] flex justify-center items-center">
+            {% if address.address_type == 'home' or not address.address_type %}
+            <img src="{% static '/web/images/house.png' %}" alt="house" class="h-[80%] w-[80%]">
+            {% elif address.address_type == 'work' %}
+            <img src="{% static '/web/images/work.png' %}" alt="house" class="h-[80%] w-[80%]">
+            {% endif %}
+        </div>
+        <ul>
+            <li class="text-[20px] font-[500]">{{ address.address_type|upper }}</li>
+            <li class="text-[10px] sm:text-[14px] font-[600]">{{address.address}}, {{address.appartment}}, {{address.landmark}}, {{address.phone_number}}</li>
+        </ul>
+        <div class="flex h-[100%] items-center">
+            <a href="{% url 'web:address_select' address.id %}">
+            <img src="{% static '/web/images/checkmark.png' %}" alt="tick" class="h-[15px] mr-[10px]">
+            </a>
+            <a href="{% url 'web:address_edit' id=address.id %}">
+               <img src="{% static '/web/images/edit.png' %}" alt="edit" class="h-[15px] mr-[10px]">
+            </a>
+            <a href="{% url 'web:address_delete' id=address.id %}">
+               <img src="{% static '/web/images/delet.png' %}" alt="delete" class="h-[15px]">
+               </a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

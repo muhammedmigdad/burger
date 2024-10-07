@@ -1,0 +1,54 @@
+{% extends 'base/web-base.html' %}
+{% block container %}
+{% load static %}
+
+
+
+
+    <header class="h-[80px] flex items-center px-[15px]">
+        <a class="h-[100%]" href="{% url 'web:cart'%}"><img src="{% static '/web/images/arrow.png' %}" alt="arrow" class="h-[40px] mt-[20px]"></a>
+        <h1 class="text-center relative left-[45%] text-[22px] font-[600]">Checkout</h1>
+    </header>
+
+    <section class="px-[15px]">
+        <div class="px-[20px] py-[10px] max-w-[620px] m-auto shadow-md offset-y-2 opacity-90 border-[1px] rounded-[5px] mt-[20px]">
+            {% csrf_token %}
+            <h3 class="text-[20px] font-[500]">BILL DETAILS</h3>
+            <ul>
+                <li class="flex justify-between w-[100%] border-b-[1px] items-center py-[10px]">
+                    <p>Item Total</p>
+                    <span>{{item_total}}</span>
+                </li>
+                <li class="flex justify-between w-[100%] border-b-[1px] items-center py-[10px]">
+                    <p>Offer Applied</p>
+                    <span>{{offer_amount}}</span>
+                </li>
+                <li class="flex justify-between w-[100%] border-b-[1px] items-center py-[10px]">
+                    <p>delivery charges(4km)</p>
+                    <span>{{delivery_charge}}</span>
+                </li>
+                <li class="flex justify-between w-[100%] items-center py-[10px]">
+                    <p class="text-[18px] font-[700]">To Pay</p>
+                    <span class="text-[18px] font-[700]">{{totel_amount}}</span>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="px-[20px] py-[10px] max-w-[620px] m-auto shadow-md offset-y-2 opacity-90 border-[1px] rounded-[5px] mt-[20px]">
+            <label class="text-[20px] font-[500]">PAYMENT METHOD</label>
+            <div class="w-[100%] border-b-[1px] items-center py-[10px]">
+                <input type="radio" name="pay" class="mr-[5px]"><span>CREDIT/DEBIT/UPI</span>
+            </div>
+            <div class="w-[100%] border-b-[1px] items-center py-[10px]">
+                <input type="radio" name="pay" class="mr-[5px]"><span>COD</span>
+            </div>
+        </div>
+        <a href="{% url 'web:creat_order' %}">       
+        <div class="max-w-[620px] py-[10px] bg-red-600 text-white text-[18px] font-[600] text-center m-auto mt-[10px] rounded-[5px] items-center mb-[50px]">
+            CONTINUE
+        </div>
+        </a>
+    </section>
+
+{% endblock %}
