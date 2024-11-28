@@ -51,12 +51,13 @@ def store_categories(request):
     }
     
     
-    return render(request,'manager/s@allow_managertore_categories.html', context=context)
+    return render(request,'manager/store_categories.html', context=context)
+@allow_manager
 @login_required(login_url='/login/')
 
 def store_category_delete(request,id):
     instance = StoreCategory.objects.get(id=id)
-    
+     
     instance.delete()
     
     return HttpResponseRedirect(reverse('manager:store_categories'))
@@ -168,7 +169,7 @@ def store_add(request,):
             context = {
             "error": True,
             "message": message,
-            "form": form,
+            "form": form,  
             }
     
         return render(request,'manager/store_add.html', context=context)
@@ -329,7 +330,8 @@ def food_categories(request):
     }
     
     
-    return render(request,'manager/f@allow_managerood_categories.html', context=context)
+    return render(request,'manager/food_categories.html', context=context)
+@allow_manager
 @login_required(login_url='/login/')
 
 def food_category_delete(request,id):
@@ -435,9 +437,7 @@ def food_delete(request, id):
 @allow_manager
 @login_required(login_url='/login/')
 
-def food_add(request,id):
-    store = Store.objects.get(id=id)
-    foodcategories = FoodCategory.objects.filter(store=store)
+def food_add(request):
     if request.method == 'POST':   
         form = FoodForm(request.POST, request.FILES)
         foodcategory = request.POST.get('foodcategory')
@@ -457,7 +457,6 @@ def food_add(request,id):
                 "error": True,
                 "message": message,
                 "form": form,
-                "foodcategories": foodcategories,
             }
     
         return render(request, 'manager/food_add.html', context=context)
@@ -466,7 +465,6 @@ def food_add(request,id):
         
         context = {
             "form": form,
-            "foodcategories": foodcategories,
             
         }
         

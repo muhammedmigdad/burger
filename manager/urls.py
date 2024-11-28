@@ -17,7 +17,7 @@ urlpatterns = [
    path("store_edit/<int:id>/", views.store_edit, name="store_edit"),
    path("store_delete/<int:id>/", views.store_delete, name="store_delete"),
    path("food/", views.food, name="food"),
-   path("food_add/<int:id>/", views.food_add, name="food_add"),
+   path('food_add/', views.food_add, name='food_add'),
    path("food_edit/<int:id>/", views.food_edit, name="food_edit"),
    path("food_delete/<int:id>/", views.food_delete, name="food_delete"),
    path("food_categories/", views.food_categories, name="food_categories"),
@@ -37,32 +37,6 @@ urlpatterns = [
    path("slider/", views.slider, name="slider"),
    path("slider_add", views.slider_add, name="slider_add"),
    path("slider_edit/<int:id>/", views.slider_edit, name="slider_edit"),
-   path("slider_delete/<int:id>/", views.slider_delete, name="slider_delete"),
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-
-   
-   
-   
-   
+   path("slider_delete/<int:id>/", views.slider_delete, name="slider_delete"),  
    
 ]

@@ -40,6 +40,7 @@
                                                 <th>IMAGE</th>
                                                 <th>EDIT</th>
                                                 <th>DELETE</th>
+                                                <th>ADD</th>
                                             </tr>
                                         </thead>
                                     <tbody>
@@ -50,6 +51,7 @@
                                             <td><img src="{{instance.image.url}}" alt="image" style="width: 70px;"></td>
                                             <td><a href="{% url 'manager:store_category_edit' id=instance.id %}"><button type="button" class="btn mb-1 btn-primary">Edit</button></a></td>
                                             <td><a href="{% url 'manager:store_category_delete' id=instance.id %}"><button type="button" class="btn mb-1 btn-danger" >Delete</button></a></td>
+                                            <td><a href="{% url 'manager:store_category_add'  %}"><button type="button" class="btn mb-1 btn-primary">Add</button></a></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

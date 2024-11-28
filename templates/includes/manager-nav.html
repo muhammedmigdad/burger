@@ -18,7 +18,7 @@
     Header start
 ***********************************-->
 <div class="header">    
-    <div class="header-content clearf   ix">
+    <div class="header-content clearfix">
         
         <div class="nav-control">            <div class="hamburger">
                 <span class="toggle-icon"><i class="icon-menu"></i></span>
@@ -221,7 +221,6 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Orders</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="#">Add Now</a></li>
                             <li><a href="{% url 'manager:order' %}">List</a></li>
                         </ul>
                     </li>
@@ -230,8 +229,8 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Store</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'manager:store_add' %}">Add Now</a></li>
                             <li><a href="{% url 'manager:store' %}">List</a></li>
+                            <li><a href="{% url 'manager:store_add' %}">Add Now</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -239,8 +238,8 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Store Category</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'manager:store_category_add' %}">Add Now</a></li>
                             <li><a href="{% url 'manager:store_categories' %}">List</a></li>
+                            <li><a href="{% url 'manager:store_category_add' %}">Add Now</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -248,8 +247,8 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Slider</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'manager:slider_add' %}">Add Now</a></li>
                             <li><a href="{% url 'manager:slider' %}">List</a></li>
+                            <li><a href="{% url 'manager:slider_add' %}">Add Now</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -257,8 +256,8 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Food Category</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'manager:food_category_add' %}">Add Now</a></li>
                             <li><a href="{% url 'manager:food_categories' %}">List</a></li>
+                            <li><a href="{% url 'manager:food_category_add' %}">Add Now</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -267,6 +266,7 @@
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{% url 'manager:food' %}">List</a></li>
+                            <li><a href="{% url 'manager:food_add' %}">Add</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -274,8 +274,8 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Users</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'manager:users_add' %}">Add Now</a></li>
                             <li><a href="{% url 'manager:users' %}">List</a></li>
+                            <li><a href="{% url 'manager:users_add' %}">Add Now</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -283,8 +283,8 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Offers</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'manager:offers_add' %}">Add Now</a></li>
                             <li><a href="{% url 'manager:offers' %}">List</a></li>
+                            <li><a href="{% url 'manager:offers_add' %}">Add Now</a></li>
                         </ul>
                     </li>
                 </ul>
